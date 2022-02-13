@@ -1,7 +1,8 @@
+import { Board } from "@/features/Board";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  return <>Hello Gomoku</>;
+  return <Board />;
 };
 
 export default Home;
