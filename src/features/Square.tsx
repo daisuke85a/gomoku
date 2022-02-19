@@ -14,7 +14,9 @@ export const Square: VFC<Props> = ({ squreIndex }) => {
   return (
     <Button
       onClick={() => setSelectSquare(squreIndex)}
-      style={{ width: "5rem", height: "5rem", fontSize: "3rem" }}
+      width="5rem"
+      height="5rem"
+      fontSize="3rem"
     >
       {selectSquare[squreIndex]}
     </Button>
