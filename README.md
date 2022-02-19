@@ -13,6 +13,7 @@ npm run dev
 
 ## 技術スタック
 
+- [TypeScript](https://www.typescriptlang.org/)
 - [Next.js](https://nextjs.org/docs/getting-started)
 - [Chakra](https://chakra-ui.com/docs/getting-started)
 - [jotai](https://jotai.org)
