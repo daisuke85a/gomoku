@@ -1,11 +1,11 @@
 import { SquareIndex } from "@/type";
-import { SimpleGrid } from "@chakra-ui/react";
+import { Container, SimpleGrid } from "@chakra-ui/react";
 import { Square } from "./Square";
 import { Status } from "./Status";
 
 export const Board = () => {
   return (
-    <div>
+    <Container centerContent>
       <Status />
       <SimpleGrid
         gap={"0.5rem 0.5rem"}
@@ -18,6 +18,6 @@ export const Board = () => {
           )
         )}
       </SimpleGrid>
-    </div>
+    </Container>
   );
 };
