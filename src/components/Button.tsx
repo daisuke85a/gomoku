@@ -1,14 +1,13 @@
-import { forwardRef, ReactNode } from "react";
+import {
+  Button as ChakuraButton,
+  ButtonProps,
+  forwardRef,
+} from "@chakra-ui/react";
 
-type Props = { children?: ReactNode } & JSX.IntrinsicElements["button"];
-
-export const Button = forwardRef<HTMLButtonElement, Props>(function button(
-  { children, ...rest },
-  ref
-) {
-  return (
-    <button {...rest} ref={ref}>
+export const Button = forwardRef<ButtonProps, "button">(
+  ({ children, ...rest }, ref) => (
+    <ChakuraButton {...rest} ref={ref}>
       {children}
-    </button>
-  );
-});
+    </ChakuraButton>
+  )
+);
