@@ -1,8 +1,6 @@
-import { selectSquareAtom } from "@/atom";
 import { Button } from "@/components/Button";
-import { Player, Square as SquareValue, SquareIndex } from "@/type";
-import { useAtom } from "jotai";
-import { memo, VFC } from "react";
+import { Square as SquareValue } from "@/type";
+import { memo } from "react";
 
 type Props = {
   value: SquareValue;
