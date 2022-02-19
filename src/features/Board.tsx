@@ -6,7 +6,7 @@ import { Status } from "./Status";
 export const Board = () => {
   return (
     <Container centerContent>
-      <Status />
+      <Status my={2} />
       <SimpleGrid
         gap={"0.5rem 0.5rem"}
         templateColumns={"5rem 5rem 5rem"}
