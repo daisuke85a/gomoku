@@ -22,7 +22,6 @@ export const Square = memo<Props>(
   function SquareComponentFunction({ state, onSelect }) {
     return (
       <Box
-        as="button"
         width="3rem"
         height="3rem"
         onClick={() => onSelect()}
