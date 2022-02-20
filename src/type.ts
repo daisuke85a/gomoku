@@ -1,9 +1,17 @@
+import { columnIndexArray, rowIndexArray } from "./const";
+
 export type Player = "white" | "black";
-export type SquareIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 export type SquareState = undefined | Player;
 export interface Game {
-  squares: SquareState[];
+  squares: SquareState[][];
   nextPlayer: Player;
 }
 
 export type Winner = undefined | Player;
+
+export type RowIndex = typeof rowIndexArray[number];
+export type ColumnIndex = typeof columnIndexArray[number];
+export type Coordinate = {
+  row: RowIndex;
+  column: ColumnIndex;
+};

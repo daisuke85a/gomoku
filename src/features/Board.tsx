@@ -1,5 +1,6 @@
 import { selectSquareAtom } from "@/atom";
-import { SquareIndex } from "@/type";
+import { columnIndexArray, rowIndexArray } from "@/const";
+import { ColumnIndex, RowIndex } from "@/type";
 import { Container, SimpleGrid } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { Square } from "./Square";
@@ -15,14 +16,14 @@ export const Board = () => {
         templateColumns={"5rem 5rem 5rem"}
         templateRows={"5rem 5rem 5rem"}
       >
-        {([0, 1, 2, 3, 4, 5, 6, 7, 8] as SquareIndex[]).map(
-          (field: SquareIndex) => (
+        {rowIndexArray.map((row: RowIndex) =>
+          columnIndexArray.map((column: ColumnIndex) => (
             <Square
-              key={field}
-              onSelect={() => void setSelectSquare(field)}
-              state={selectSquare[field]}
+              key={row}
+              onSelect={() => void setSelectSquare({ row, column })}
+              state={selectSquare[row]?.[column]}
             />
-          )
+          ))
         )}
       </SimpleGrid>
     </Container>

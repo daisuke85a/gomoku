@@ -1,23 +1,21 @@
 import { atom } from "jotai";
 import { atomWithImmer } from "jotai/immer";
-import { numberOfSquare } from "./const";
-import { Game, Player, SquareIndex, SquareState, Winner } from "./type";
+import {
+  columnIndexArray,
+  columnIndexMax,
+  maxColumn,
+  maxRow,
+  rowIndexArray,
+  rowIndexMax,
+} from "./const";
+import { Coordinate, Game, Player, SquareState, Winner } from "./type";
 
 const gameInitialState: Game = {
-  squares: Array<SquareState>(numberOfSquare).fill(undefined),
+  squares: Array<SquareState[]>(maxRow).fill(
+    Array<SquareState>(maxColumn).fill(undefined)
+  ),
   nextPlayer: "black",
 };
-
-const lines = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-] as const;
 
 const gameAtom = atomWithImmer<Game>(gameInitialState);
 
@@ -26,14 +24,48 @@ export const resetGameAtom = atom(null, (_get, set) =>
 );
 
 export const winnerAtom = atom<Winner>((get) => {
-  for (const line of lines) {
-    const [a, b, c] = line;
-    if (
-      get(gameAtom).squares[a] !== undefined &&
-      get(gameAtom).squares[a] === get(gameAtom).squares[b] &&
-      get(gameAtom).squares[a] === get(gameAtom).squares[c]
-    ) {
-      return get(gameAtom).squares[a];
+  const squares = get(gameAtom).squares;
+  for (const row of rowIndexArray) {
+    for (const column of columnIndexArray) {
+      if (squares[row]?.[column] === undefined) {
+        continue;
+      }
+
+      if (row + 2 <= rowIndexMax) {
+        if (
+          squares[row]?.[column] === squares[row + 1]?.[column] &&
+          squares[row]?.[column] === squares[row + 2]?.[column]
+        ) {
+          return squares[row]?.[column];
+        }
+      }
+
+      if (column + 2 <= columnIndexMax) {
+        if (
+          squares[row]?.[column] === squares[row]?.[column + 1] &&
+          squares[row]?.[column] === squares[row]?.[column + 2]
+        ) {
+          return squares[row]?.[column];
+        }
+      }
+
+      if (row + 2 <= rowIndexMax && column + 2 <= columnIndexMax) {
+        if (
+          squares[row]?.[column] === squares[row + 1]?.[column + 1] &&
+          squares[row]?.[column] === squares[row + 2]?.[column + 2]
+        ) {
+          return squares[row]?.[column];
+        }
+      }
+
+      if (row - 2 >= 0 && column - 2 >= 0) {
+        if (
+          squares[row]?.[column] === squares[row - 1]?.[column - 1] &&
+          squares[row]?.[column] === squares[row - 2]?.[column - 2]
+        ) {
+          return squares[row]?.[column];
+        }
+      }
     }
   }
   return undefined;
@@ -41,15 +73,19 @@ export const winnerAtom = atom<Winner>((get) => {
 
 export const selectSquareAtom = atom(
   (get) => get(gameAtom).squares,
-  (get, set, squareIndex: SquareIndex) => {
+  (get, set, coordinate: Coordinate) => {
     if (
       get(winnerAtom) !== undefined ||
-      get(gameAtom).squares[squareIndex] !== undefined
+      get(gameAtom).squares[coordinate.row]?.[coordinate.column] !== undefined
     )
       return;
 
     set(gameAtom, (game) => {
-      game.squares[squareIndex] = game.nextPlayer;
+      const row = game.squares[coordinate.row];
+      if (row === undefined) {
+        throw new Error("game.squares[coordinate.row] is undefined");
+      }
+      row[coordinate.column] = game.nextPlayer;
       game.nextPlayer = game.nextPlayer === "black" ? "white" : "black";
     });
   }
