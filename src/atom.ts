@@ -1,12 +1,7 @@
 import { atom } from "jotai";
 import { atomWithImmer } from "jotai/immer";
-import {
-  columnIndexArray,
-  columnIndexMax,
-  gameInitialState,
-  rowIndexArray,
-  rowIndexMax,
-} from "./const";
+import { gameInitialState } from "./const";
+import { checkWinner } from "./game";
 import { Coordinate, Game, Player, Winner } from "./type";
 
 const gameAtom = atomWithImmer<Game>(gameInitialState);
@@ -16,51 +11,7 @@ export const resetGameAtom = atom(null, (_get, set) =>
 );
 
 export const winnerAtom = atom<Winner>((get) => {
-  const squares = get(gameAtom).squares;
-  for (const row of rowIndexArray) {
-    for (const column of columnIndexArray) {
-      if (squares[row]?.[column] === undefined) {
-        continue;
-      }
-
-      if (row + 2 <= rowIndexMax) {
-        if (
-          squares[row]?.[column] === squares[row + 1]?.[column] &&
-          squares[row]?.[column] === squares[row + 2]?.[column]
-        ) {
-          return squares[row]?.[column];
-        }
-      }
-
-      if (column + 2 <= columnIndexMax) {
-        if (
-          squares[row]?.[column] === squares[row]?.[column + 1] &&
-          squares[row]?.[column] === squares[row]?.[column + 2]
-        ) {
-          return squares[row]?.[column];
-        }
-      }
-
-      if (row + 2 <= rowIndexMax && column + 2 <= columnIndexMax) {
-        if (
-          squares[row]?.[column] === squares[row + 1]?.[column + 1] &&
-          squares[row]?.[column] === squares[row + 2]?.[column + 2]
-        ) {
-          return squares[row]?.[column];
-        }
-      }
-
-      if (row - 2 >= 0 && column - 2 >= 0) {
-        if (
-          squares[row]?.[column] === squares[row - 1]?.[column - 1] &&
-          squares[row]?.[column] === squares[row - 2]?.[column - 2]
-        ) {
-          return squares[row]?.[column];
-        }
-      }
-    }
-  }
-  return undefined;
+  return checkWinner(get(gameAtom).squares);
 });
 
 export const selectSquareAtom = atom(
