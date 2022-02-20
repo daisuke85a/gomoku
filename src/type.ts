@@ -1,9 +1,8 @@
-export type Player = "X" | "O";
+export type Player = "white" | "black";
 export type SquareIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
-export type Square = undefined | Player;
-
+export type SquareState = undefined | Player;
 export interface Game {
-  squares: Square[];
+  squares: SquareState[];
   nextPlayer: Player;
 }
 

@@ -21,7 +21,7 @@ export const Board = () => {
             <Square
               key={field}
               onSelect={() => void setSelectSquare(field)}
-              value={selectSquare[field]}
+              state={selectSquare[field]}
             />
           )
         )}

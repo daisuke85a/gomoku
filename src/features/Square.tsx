@@ -1,14 +1,15 @@
 import { Button } from "@/components/Button";
-import { Square as SquareValue } from "@/type";
+import { SquareState } from "@/type";
 import { memo } from "react";
+import { Goishi } from "./Goishi";
 
 type Props = {
-  value: SquareValue;
+  state: SquareState;
   onSelect: () => void;
 };
 
 export const Square = memo<Props>(
-  function SquareComponentFunction({ value, onSelect }) {
+  function SquareComponentFunction({ state, onSelect }) {
     return (
       <Button
         onClick={() => onSelect()}
@@ -16,9 +17,9 @@ export const Square = memo<Props>(
         height="5rem"
         fontSize="3rem"
       >
-        {value ?? ""}
+        {state !== undefined && <Goishi type={state} />}
       </Button>
     );
   },
-  (prevProps, nextProps) => prevProps.value === nextProps.value
+  (prevProps, nextProps) => prevProps.state === nextProps.state
 );

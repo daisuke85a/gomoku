@@ -1,11 +1,11 @@
 import { atom } from "jotai";
 import { atomWithImmer } from "jotai/immer";
 import { numberOfSquare } from "./const";
-import { Game, Player, Square, SquareIndex, Winner } from "./type";
+import { Game, Player, SquareIndex, SquareState, Winner } from "./type";
 
 const gameInitialState: Game = {
-  squares: Array<Square>(numberOfSquare).fill(undefined),
-  nextPlayer: "X",
+  squares: Array<SquareState>(numberOfSquare).fill(undefined),
+  nextPlayer: "black",
 };
 
 const lines = [
@@ -50,7 +50,7 @@ export const selectSquareAtom = atom(
 
     set(gameAtom, (game) => {
       game.squares[squareIndex] = game.nextPlayer;
-      game.nextPlayer = game.nextPlayer === "X" ? "O" : "X";
+      game.nextPlayer = game.nextPlayer === "black" ? "white" : "black";
     });
   }
 );
