@@ -4,10 +4,10 @@ import { VFC } from "react";
 
 type Props = {
   type: Player;
-};
+} & IconProps;
 
-export const Goishi: VFC<Props> = ({ type }) => {
-  return <CircleIcon color={type === "white" ? "white" : "black"} />;
+export const Goishi: VFC<Props> = ({ type, ...rest }) => {
+  return <CircleIcon color={type === "white" ? "white" : "black"} {...rest} />;
 };
 
 const CircleIcon = (props: IconProps) => (

@@ -2,6 +2,7 @@ import { Button } from "@/components/Button";
 import { SquareState } from "@/type";
 import { memo } from "react";
 import { Goishi } from "./Goishi";
+import { SquareBackground } from "./SquareBackground";
 
 type Props = {
   state: SquareState;
@@ -16,8 +17,10 @@ export const Square = memo<Props>(
         width="5rem"
         height="5rem"
         fontSize="3rem"
+        position="relative"
       >
-        {state !== undefined && <Goishi type={state} />}
+        <SquareBackground position="absolute" />
+        {state !== undefined && <Goishi type={state} position="absolute" />}
       </Button>
     );
   },

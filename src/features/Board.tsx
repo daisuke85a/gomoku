@@ -12,7 +12,6 @@ export const Board = () => {
     <Container centerContent>
       <Status my={2} />
       <SimpleGrid
-        gap={"0.5rem 0.5rem"}
         templateColumns={"5rem 5rem 5rem"}
         templateRows={"5rem 5rem 5rem"}
       >
