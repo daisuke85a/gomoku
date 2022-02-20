@@ -12,13 +12,7 @@ type Props = {
 export const Square = memo<Props>(
   function SquareComponentFunction({ state, onSelect }) {
     return (
-      <Button
-        onClick={() => onSelect()}
-        width="5rem"
-        height="5rem"
-        fontSize="3rem"
-        position="relative"
-      >
+      <Button onClick={() => onSelect()} fontSize="2rem" position="relative">
         <SquareBackground position="absolute" />
         {state !== undefined && <Goishi type={state} position="absolute" />}
       </Button>

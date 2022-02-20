@@ -3,16 +3,14 @@ import { atomWithImmer } from "jotai/immer";
 import {
   columnIndexArray,
   columnIndexMax,
-  maxColumn,
-  maxRow,
   rowIndexArray,
   rowIndexMax,
 } from "./const";
 import { Coordinate, Game, Player, SquareState, Winner } from "./type";
 
 const gameInitialState: Game = {
-  squares: Array<SquareState[]>(maxRow).fill(
-    Array<SquareState>(maxColumn).fill(undefined)
+  squares: Array<SquareState[]>(rowIndexMax + 1).fill(
+    Array<SquareState>(columnIndexMax + 1).fill(undefined)
   ),
   nextPlayer: "black",
 };

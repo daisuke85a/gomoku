@@ -13,13 +13,19 @@ export const Board = () => {
     <Container centerContent>
       <Status my={2} />
       <SimpleGrid
-        templateColumns={"5rem 5rem 5rem"}
-        templateRows={"5rem 5rem 5rem"}
+        templateColumns={columnIndexArray.reduce<string>(
+          (pre) => pre + "1fr ",
+          ""
+        )}
+        templateRows={columnIndexArray.reduce<string>(
+          (pre) => pre + "1fr ",
+          ""
+        )}
       >
         {rowIndexArray.map((row: RowIndex) =>
           columnIndexArray.map((column: ColumnIndex) => (
             <Square
-              key={row}
+              key={`row=${row.toString()},column=${column.toString()}`}
               onSelect={() => void setSelectSquare({ row, column })}
               state={selectSquare[row]?.[column]}
             />
