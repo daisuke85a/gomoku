@@ -1,29 +1,33 @@
-import { selectSquareAtom } from "@/atom";
-import { columnIndexArray, rowIndexArray } from "@/const";
-import { ColumnIndex, RowIndex } from "@/type";
+import { getGameModeAtom, selectSquareAtom } from "@/atom";
+import { arrayColumnIndex, arrayRowIndex } from "@/game";
 import { Container, SimpleGrid } from "@chakra-ui/react";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
+import { VFC } from "react";
 import { Square } from "./Square";
 import { Status } from "./Status";
 
-export const Board = () => {
+export const Board: VFC = () => {
   const [selectSquare, setSelectSquare] = useAtom(selectSquareAtom);
+  const gameMode = useAtomValue(getGameModeAtom);
+  if (gameMode === undefined) {
+    return null;
+  }
 
   return (
     <Container centerContent>
       <Status my={2} />
       <SimpleGrid
-        templateColumns={columnIndexArray.reduce<string>(
+        templateColumns={arrayRowIndex(gameMode).reduce<string>(
           (pre) => pre + "1fr ",
           ""
         )}
-        templateRows={columnIndexArray.reduce<string>(
+        templateRows={arrayRowIndex(gameMode).reduce<string>(
           (pre) => pre + "1fr ",
           ""
         )}
       >
-        {rowIndexArray.map((row: RowIndex) =>
-          columnIndexArray.map((column: ColumnIndex) => (
+        {arrayRowIndex(gameMode).map((row) =>
+          arrayColumnIndex(gameMode).map((column) => (
             <Square
               key={`row=${row.toString()},column=${column.toString()}`}
               onSelect={() => void setSelectSquare({ row, column })}

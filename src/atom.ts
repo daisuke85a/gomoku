@@ -1,29 +1,51 @@
 import { atom } from "jotai";
 import { atomWithImmer } from "jotai/immer";
-import { gameInitialState } from "./const";
-import { checkWinner } from "./game";
-import { Coordinate, Game, Player, Winner } from "./type";
+import { checkWinner, gameInitialState } from "./game";
+import { Coordinate, Game, GameMode, Player, Winner } from "./type";
 
-const gameAtom = atomWithImmer<Game>(gameInitialState);
+const gameAtom = atomWithImmer<Game | undefined>(undefined);
 
-export const resetGameAtom = atom(null, (_get, set) =>
-  set(gameAtom, gameInitialState)
-);
+const gameModeAtom = atom<GameMode | undefined>(undefined);
+
+export const getGameModeAtom = atom((get) => get(gameModeAtom));
+
+export const setGameModeAtom = atom(null, (_get, set, gameMode: GameMode) => {
+  set(gameModeAtom, gameMode);
+  set(gameAtom, gameInitialState(gameMode));
+});
 
 export const winnerAtom = atom<Winner>((get) => {
-  return checkWinner(get(gameAtom).squares);
+  const gameMode = get(gameModeAtom);
+  if (gameMode === undefined) {
+    throw new Error("gameMode is undefined");
+  }
+  const game = get(gameAtom);
+  if (game === undefined) {
+    throw new Error("game is undefined");
+  }
+
+  return checkWinner(game.squares, gameMode);
 });
 
 export const selectSquareAtom = atom(
-  (get) => get(gameAtom).squares,
+  (get) => {
+    const game = get(gameAtom);
+    if (game === undefined) {
+      throw new Error("game is undefined");
+    }
+    return game.squares;
+  },
   (get, set, coordinate: Coordinate) => {
     if (
       get(winnerAtom) !== undefined ||
-      get(gameAtom).squares[coordinate.row]?.[coordinate.column] !== undefined
+      get(gameAtom)?.squares[coordinate.row]?.[coordinate.column] !== undefined
     )
       return;
 
     set(gameAtom, (game) => {
+      if (game === undefined) {
+        throw new Error("game is undefined");
+      }
       const row = game.squares[coordinate.row];
       if (row === undefined) {
         throw new Error("game.squares[coordinate.row] is undefined");
@@ -34,4 +56,10 @@ export const selectSquareAtom = atom(
   }
 );
 
-export const nextPlayerAtom = atom<Player>((get) => get(gameAtom).nextPlayer);
+export const nextPlayerAtom = atom<Player>((get) => {
+  const game = get(gameAtom);
+  if (game === undefined) {
+    throw new Error("game is undefined");
+  }
+  return game.nextPlayer;
+});
