@@ -1,7 +1,7 @@
-import { Board } from "@/features/Board";
+import { Game } from "@/features/Game";
 
 const sanmoku = () => {
-  return <Board gameMode="sanmoku" />;
+  return <Game gameMode="sanmoku" />;
 };
 
 export default sanmoku;
