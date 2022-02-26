@@ -1,3 +1,4 @@
+import { absoluteCenter } from "@/const";
 import { SquareState } from "@/type";
 import { Box } from "@chakra-ui/react";
 import { memo } from "react";
@@ -8,15 +9,6 @@ type Props = {
   state: SquareState;
   onSelect: () => void;
 };
-
-const absoluteCenter = {
-  position: "absolute",
-  margin: "auto",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-} as const;
 
 export const Square = memo<Props>(
   function SquareComponentFunction({ state, onSelect }) {
