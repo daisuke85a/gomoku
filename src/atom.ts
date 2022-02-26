@@ -9,19 +9,22 @@ const gameModeAtom = atom<GameMode | undefined>(undefined);
 
 export const getGameModeAtom = atom((get) => get(gameModeAtom));
 
-export const setGameModeAtom = atom(null, (_get, set, gameMode: GameMode) => {
-  set(gameModeAtom, gameMode);
-  set(gameAtom, gameInitialState(gameMode));
-});
+export const setGameModeAtom = atom(
+  (get) => get(gameModeAtom),
+  (_get, set, gameMode: GameMode) => {
+    set(gameModeAtom, gameMode);
+    set(gameAtom, gameInitialState(gameMode));
+  }
+);
 
 export const winnerAtom = atom<Winner>((get) => {
   const gameMode = get(gameModeAtom);
   if (gameMode === undefined) {
-    throw new Error("gameMode is undefined");
+    return undefined;
   }
   const game = get(gameAtom);
   if (game === undefined) {
-    throw new Error("game is undefined");
+    return undefined;
   }
 
   return checkWinner(game.squares, gameMode);
@@ -31,7 +34,7 @@ export const selectSquareAtom = atom(
   (get) => {
     const game = get(gameAtom);
     if (game === undefined) {
-      throw new Error("game is undefined");
+      return [];
     }
     return game.squares;
   },
@@ -56,10 +59,10 @@ export const selectSquareAtom = atom(
   }
 );
 
-export const nextPlayerAtom = atom<Player>((get) => {
+export const nextPlayerAtom = atom<Player | undefined>((get) => {
   const game = get(gameAtom);
   if (game === undefined) {
-    throw new Error("game is undefined");
+    return undefined;
   }
   return game.nextPlayer;
 });
