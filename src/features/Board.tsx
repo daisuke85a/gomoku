@@ -1,14 +1,24 @@
-import { getGameModeAtom, selectSquareAtom } from "@/atom";
+import { selectSquareAtom, setGameModeAtom } from "@/atom";
 import { arrayColumnIndex, arrayRowIndex } from "@/game";
+import { GameMode } from "@/type";
 import { Container, SimpleGrid } from "@chakra-ui/react";
-import { useAtom, useAtomValue } from "jotai";
-import { VFC } from "react";
+import { useAtom } from "jotai";
+import { useEffect, VFC } from "react";
 import { Square } from "./Square";
 import { Status } from "./Status";
 
-export const Board: VFC = () => {
+type Props = {
+  gameMode: GameMode;
+};
+
+export const Board: VFC<Props> = ({ gameMode: gameModeProp }) => {
   const [selectSquare, setSelectSquare] = useAtom(selectSquareAtom);
-  const gameMode = useAtomValue(getGameModeAtom);
+  const [gameMode, setGameMode] = useAtom(setGameModeAtom);
+
+  useEffect(() => {
+    setGameMode(gameModeProp);
+  }, [gameModeProp, setGameMode]);
+
   if (gameMode === undefined) {
     return null;
   }
