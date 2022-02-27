@@ -16,7 +16,7 @@ export const Board: VFC<ContainerProps> = ({ ...rest }) => {
 
   return (
     <Container centerContent {...rest}>
-      <Box w="40vw" h="40vw">
+      <Box w="50vw" h="50vw">
         {arrayRowIndex(gameMode).map((row) => {
           return (
             <Flex key={row} h={`calc(100% / ${gameModeConfig[gameMode].rows})`}>

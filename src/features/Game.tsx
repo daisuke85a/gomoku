@@ -1,4 +1,5 @@
 import { setGameModeAtom } from "@/atom";
+import { headerHeight } from "@/components/Header";
 import { absoluteCenter } from "@/const";
 import { GameMode } from "@/type";
 import { Box, Flex, useBoolean, VStack } from "@chakra-ui/react";
@@ -24,21 +25,16 @@ export const Game: VFC<Props> = ({ gameMode: gameModeProp }) => {
   }
 
   return (
-    <VStack position="relative">
+    <VStack position="relative" h={`calc(100vh - ${headerHeight})`}>
       <Box {...absoluteCenter}>
         <Box
           clipPath="polygon(0 0, 100% 0%, 100% 60%, 0% 100%)"
           backgroundColor="blackAlpha.900"
-          h={`50vh`}
+          h="55%"
         />
-        <Box h="50vh" />
+        <Box h="45%" />
       </Box>
-      <Flex
-        {...absoluteCenter}
-        h="100vh"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Flex {...absoluteCenter} alignItems="center" justifyContent="center">
         <Board />
       </Flex>
     </VStack>
