@@ -1,7 +1,7 @@
 import { setGameModeAtom } from "@/atom";
 import { absoluteCenter } from "@/const";
 import { GameMode } from "@/type";
-import { Box, useBoolean, VStack } from "@chakra-ui/react";
+import { Box, Flex, useBoolean, VStack } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { useEffect, VFC } from "react";
 import { Board } from "./Board";
@@ -33,9 +33,14 @@ export const Game: VFC<Props> = ({ gameMode: gameModeProp }) => {
         />
         <Box h="50vh" />
       </Box>
-      <Box {...absoluteCenter}>
-        <Board gameMode={gameMode} />
-      </Box>
+      <Flex
+        {...absoluteCenter}
+        h="100vh"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Board />
+      </Flex>
     </VStack>
   );
 };
