@@ -31,7 +31,7 @@ export const Game: VFC<Props> = ({ gameMode: gameModeProp }) => {
         <GameBackground />
       </Box>
       <Flex {...absoluteCenter} alignItems="center" justifyContent="center">
-        <Board />
+        <Board gameMode={gameMode} />
       </Flex>
     </VStack>
   );

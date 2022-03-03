@@ -1,21 +1,18 @@
 import { getGameModeAtom, selectSquareAtom } from "@/atom";
 import { absoluteCenter, gameModeConfig } from "@/const";
 import { arrayColumnIndex, arrayRowIndex } from "@/game";
+import { GameMode } from "@/type";
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { LayoutProps } from "@chakra-ui/styled-system/src/config/layout";
 import { useAtom, useAtomValue } from "jotai";
 import { VFC } from "react";
 import { Square } from "./Square";
 
-const boardSize: LayoutProps["w"] & LayoutProps["h"] = [
-  "90vw",
-  "70vw",
-  "60vw",
-  "50vw",
-  "40vw",
-];
+type Props = {
+  gameMode: GameMode;
+};
 
-export const Board: VFC = () => {
+export const Board: VFC<Props> = () => {
   const [selectSquare, setSelectSquare] = useAtom(selectSquareAtom);
   const gameMode = useAtomValue(getGameModeAtom);
 
@@ -56,3 +53,11 @@ export const Board: VFC = () => {
     </>
   );
 };
+
+const boardSize: LayoutProps["w"] & LayoutProps["h"] = [
+  "90vw",
+  "70vw",
+  "60vw",
+  "50vw",
+  "40vw",
+];
