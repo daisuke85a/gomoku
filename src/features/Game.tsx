@@ -1,10 +1,12 @@
 import { setGameModeAtom } from "@/atom";
+import { headerHeight } from "@/components/Header";
 import { absoluteCenter } from "@/const";
 import { GameMode } from "@/type";
-import { Box, useBoolean, VStack } from "@chakra-ui/react";
+import { Box, Flex, useBoolean, VStack } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { useEffect, VFC } from "react";
 import { Board } from "./Board";
+import { GameBackground } from "./GameBackground";
 
 type Props = {
   gameMode: GameMode;
@@ -24,18 +26,13 @@ export const Game: VFC<Props> = ({ gameMode: gameModeProp }) => {
   }
 
   return (
-    <VStack position="relative">
+    <VStack position="relative" h={`calc(100vh - ${headerHeight})`}>
       <Box {...absoluteCenter}>
-        <Box
-          clipPath="polygon(0 0, 100% 0%, 100% 60%, 0% 100%)"
-          backgroundColor="blackAlpha.900"
-          h={`50vh`}
-        />
-        <Box h="50vh" />
+        <GameBackground />
       </Box>
-      <Box {...absoluteCenter}>
+      <Flex {...absoluteCenter} alignItems="center" justifyContent="center">
         <Board gameMode={gameMode} />
-      </Box>
+      </Flex>
     </VStack>
   );
 };

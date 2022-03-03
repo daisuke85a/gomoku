@@ -3,7 +3,6 @@ import { VFC } from "react";
 
 const SquareBackgroundDefaultStyle = {
   borderColor: "black",
-  backgroundColor: "yellow.500",
   height: "100%",
 };
 

@@ -1,11 +1,11 @@
 import { getGameModeAtom, selectSquareAtom } from "@/atom";
+import { absoluteCenter, gameModeConfig } from "@/const";
 import { arrayColumnIndex, arrayRowIndex } from "@/game";
 import { GameMode } from "@/type";
-import { Container, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Image, LayoutProps } from "@chakra-ui/react";
 import { useAtom, useAtomValue } from "jotai";
 import { VFC } from "react";
 import { Square } from "./Square";
-import { Status } from "./Status";
 
 type Props = {
   gameMode: GameMode;
@@ -20,28 +20,43 @@ export const Board: VFC<Props> = () => {
   }
 
   return (
-    <Container centerContent>
-      <Status my={2} />
-      <SimpleGrid
-        templateColumns={arrayRowIndex(gameMode).reduce<string>(
-          (pre) => pre + "1fr ",
-          ""
-        )}
-        templateRows={arrayRowIndex(gameMode).reduce<string>(
-          (pre) => pre + "1fr ",
-          ""
-        )}
-      >
-        {arrayRowIndex(gameMode).map((row) =>
-          arrayColumnIndex(gameMode).map((column) => (
-            <Square
-              key={`row=${row.toString()},column=${column.toString()}`}
-              onSelect={() => void setSelectSquare({ row, column })}
-              state={selectSquare[row]?.[column]}
-            />
-          ))
-        )}
-      </SimpleGrid>
-    </Container>
+    <>
+      <Box w={boardSize} h={boardSize} position="relative">
+        <Image
+          src="/images/goban.jpg"
+          objectFit="fill"
+          height="100%"
+          width="100%"
+          alt="board background"
+          {...absoluteCenter}
+        />
+        <Box {...absoluteCenter}>
+          {arrayRowIndex(gameMode).map((row) => {
+            return (
+              <Flex
+                key={row}
+                h={`calc(100% / ${gameModeConfig[gameMode].rows})`}
+              >
+                {arrayColumnIndex(gameMode).map((column) => (
+                  <Square
+                    key={column}
+                    onSelect={() => void setSelectSquare({ row, column })}
+                    state={selectSquare[row]?.[column]}
+                  />
+                ))}
+              </Flex>
+            );
+          })}
+        </Box>
+      </Box>
+    </>
   );
 };
+
+const boardSize: LayoutProps["w"] & LayoutProps["h"] = [
+  "90vw",
+  "70vw",
+  "60vw",
+  "50vw",
+  "40vw",
+];
