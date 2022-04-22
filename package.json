@@ -14,7 +14,7 @@
     "@chakra-ui/react": "1.8.6",
     "@emotion/react": "11.8.2",
     "@emotion/styled": "11.8.1",
-    "framer-motion": "6.2.8",
+    "framer-motion": "6.3.1",
     "immer": "9.0.12",
     "jotai": "1.6.1",
     "next": "12.1.1",
