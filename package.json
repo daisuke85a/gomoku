@@ -18,7 +18,7 @@
     "immer": "9.0.12",
     "jotai": "1.6.1",
     "next": "12.1.5",
-    "npm-run-all": "4.1.5",
+    "npm-run-all2": "5.0.0",
     "pathpida": "0.18.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
